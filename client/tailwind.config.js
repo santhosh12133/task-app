@@ -1,0 +1,107 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Geist', 'system-ui', 'sans-serif'],
+        display: ['SF Pro Display', 'Inter', '-apple-system', 'system-ui', 'sans-serif'],
+        geist: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
+      },
+      colors: {
+        bg: 'rgb(var(--color-bg) / <alpha-value>)',
+        panel: 'rgb(var(--color-panel) / <alpha-value>)',
+        panelAlt: 'rgb(var(--color-panel-alt) / <alpha-value>)',
+        panelLight: 'rgb(var(--color-panel-light) / <alpha-value>)',
+        text: 'rgb(var(--color-text) / <alpha-value>)',
+        textAlt: 'rgb(var(--color-text-alt) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        line: 'rgb(var(--color-line) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent) / <alpha-value>)',
+        accentSoft: 'rgb(var(--color-accent-soft) / <alpha-value>)',
+        success: 'rgb(var(--color-success) / <alpha-value>)',
+        warning: 'rgb(var(--color-warning) / <alpha-value>)',
+        danger: 'rgb(var(--color-danger) / <alpha-value>)',
+        navyGloss: 'rgb(var(--color-navy-gloss) / <alpha-value>)',
+      },
+      boxShadow: {
+        glass: '0 20px 60px rgba(15, 23, 42, 0.18)',
+        glow: '0 0 0 1px rgba(255,255,255,0.12), 0 24px 80px rgba(59,130,246,0.18)',
+        'glass-light': 'inset 0 1px 2px rgba(255,255,255,0.08)',
+        'premium': '0 4px 32px rgba(0, 0, 0, 0.12)',
+        'premium-lg': '0 24px 64px rgba(0, 0, 0, 0.18)',
+        'glow-soft': '0 0 20px rgba(59, 130, 246, 0.15)',
+      },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+      },
+      keyframes: {
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        shimmer: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        glow: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.15)' },
+          '50%': { boxShadow: '0 0 30px rgba(59, 130, 246, 0.25)' },
+        },
+        pulse-slow: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        },
+      },
+      animation: {
+        fadeUp: 'fadeUp 0.6s ease-out',
+        fadeIn: 'fadeIn 0.4s ease-out',
+        slideDown: 'slideDown 0.4s ease-out',
+        shimmer: 'shimmer 1.8s linear infinite',
+        float: 'float 6s ease-in-out infinite',
+        glow: 'glow 3s ease-in-out infinite',
+        'pulse-slow': 'pulse-slow 2s ease-in-out infinite',
+      },
+      transitionTimingFunction: {
+        smooth: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+      spacing: {
+        '0.5': '2px',
+        '1': '4px',
+        '1.5': '6px',
+        '2': '8px',
+        '2.5': '10px',
+        '3': '12px',
+        '3.5': '14px',
+        '4': '16px',
+        '5': '20px',
+        '6': '24px',
+        '7': '28px',
+        '8': '32px',
+        '9': '36px',
+        '10': '40px',
+        '12': '48px',
+        '14': '56px',
+        '16': '64px',
+      },
+    },
+  },
+  plugins: [],
+};

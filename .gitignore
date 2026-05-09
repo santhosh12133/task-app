@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+client/node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+client/dist/
+
+# Testing
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+client/playwright-report/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+.blackbox/
+.codex-logs/
+*.tmp
+
+# OS
+Thumbs.db
+.DS_Store
