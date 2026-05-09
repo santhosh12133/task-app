@@ -1,93 +1,139 @@
-# Orion Task App
+# Task App
 
-Premium full-stack AI-powered task management app with Node/Express + MongoDB backend and React/Vite frontend.
+Full-stack AI-powered task management application with a Node.js/Express API, MongoDB database, and a React + Vite frontend.
+
+## Features
+
+- Task management with status updates, ordering, and realtime sync
+- Notes and dashboard modules
+- JWT-based authentication plus Google sign-in support
+- AI assistant endpoints with fallback behavior when API keys are unavailable
+- Responsive frontend built with modern React tooling
 
 ## Tech Stack
 
-- Backend: Node.js, Express 5, MongoDB (Mongoose), JWT, Google auth verification, OpenAI SDK, Socket.io
-- Frontend: React, Vite, Tailwind CSS, Framer Motion, Recharts
-- Security: Helmet, CORS, rate limiting, cookie parser
+### Backend
 
-## Project Structure
+- Node.js + Express 5
+- MongoDB + Mongoose
+- JWT auth (`jsonwebtoken`)
+- Google token verification (`google-auth-library`)
+- Socket.IO for realtime events
+- Zod validation
+- Security middleware: Helmet, CORS, rate limiting, cookie parser
 
-- `server.js` - backend bootstrap + API + static serving
-- `routes/` - API routes (`auth`, `tasks`, `ai`, `notes`, `dashboard`)
-- `models/` - Mongoose schemas
-- `middleware/` - auth and error handling
-- `utils/` - JWT, AI helpers, Socket.io setup
-- `client/` - React + Vite app
-- `tests/` - node:test smoke tests
+### Frontend
+
+- React 19 + Vite
+- React Router
+- Tailwind CSS
+- Framer Motion
+- Recharts
+- React Hook Form + Zod
+
+## Repository Structure
+
+- `server.js` - server bootstrap and startup
+- `app.js` - app composition/middleware wiring
+- `routes/` - API endpoints (`auth`, `tasks`, `notes`, `dashboard`, `ai`)
+- `models/` - Mongoose models
+- `middleware/` - auth, validation, and error handling middleware
+- `config/` - environment and database setup
+- `utils/` - helpers for JWT, sockets, activity logging, etc.
+- `client/` - React frontend application
+- `tests/` - backend tests (integration, smoke, jest suites)
+
+## Prerequisites
+
+- Node.js 18+
+- npm 9+
+- MongoDB connection string (local or Atlas)
 
 ## Environment Variables
 
-Create `.env` in the project root (or copy from `.env.example`):
+Create a `.env` file in the project root.
+
+Required/commonly used variables:
 
 - `MONGODB_URI`
 - `JWT_SECRET`
 - `JWT_EXPIRES_IN`
-- `OPENAI_API_KEY`
-- `OPENAI_MODEL` (optional)
-- `CLIENT_ORIGIN`
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
 - `PORT`
 - `NODE_ENV`
+- `CLIENT_ORIGIN`
+- `OPENAI_API_KEY`
+- `OPENAI_MODEL` (optional)
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
 
-For frontend Google Sign-In, create `client/.env`:
+Create `client/.env` for frontend-specific values:
 
-- `VITE_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com`
 - `VITE_API_BASE_URL=http://localhost:5000/api`
+- `VITE_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com`
 
-## Local Development
+## Installation
 
-### 1) Install backend dependencies
+Install root dependencies:
 
-```powershell
+```bash
 npm install --legacy-peer-deps
 ```
 
-### 2) Install frontend dependencies
+Install client dependencies:
 
-```powershell
-Push-Location client
+```bash
+cd client
 npm install --legacy-peer-deps
-Pop-Location
+cd ..
 ```
 
-### 3) Start backend
+## Running Locally
 
-```powershell
-npm start
-```
+Run backend (from project root):
 
-### 4) Start frontend
-
-```powershell
-Push-Location client
+```bash
 npm run dev
-Pop-Location
 ```
 
-Frontend runs on `http://localhost:5173` and backend on `http://localhost:5000`.
+Run frontend (new terminal):
 
-## Tests and Checks
-
-Run smoke tests:
-
-```powershell
-npm test
+```bash
+cd client
+npm run dev
 ```
 
-Optional syntax check:
+Default local URLs:
 
-```powershell
-Get-ChildItem -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }
-```
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:5000`
+
+## Available Scripts
+
+From project root:
+
+- `npm start` - start backend server
+- `npm run dev` - run backend in development mode
+- `npm test` - run Node test suites
+- `npm run test:api` - run API-focused Jest project
+- `npm run test:ui` - run client Jest project from root config
+- `npm run test:coverage` - run Jest with coverage
+- `npm run test:e2e` - run Playwright e2e tests (delegates to client)
+- `npm run lint` - lint repository
+- `npm run build:client` - build frontend
+- `npm run verify` - lint + tests + client build
+
+From `client/`:
+
+- `npm run dev` - Vite dev server
+- `npm run build` - production build
+- `npm run preview` - preview built app
+- `npm run test:e2e` - Playwright tests
+- `npm run test:e2e:ui` - Playwright UI mode
+- `npm run test:e2e:debug` - Playwright debug mode
 
 ## Realtime Events
 
-Socket.io is initialized in `server.js` through `utils/socket.js`.
-Task API emits user-scoped events:
+Socket.IO is initialized on the backend and emits user-scoped task events such as:
 
 - `task:created`
 - `task:updated`
@@ -95,26 +141,24 @@ Task API emits user-scoped events:
 - `task:reordered`
 - `task:deleted`
 
-Clients can authenticate socket connections using JWT in handshake `auth.token`.
+Clients can pass JWT through socket handshake auth (`auth.token`) for user-specific channels.
 
 ## Deployment
 
-### Backend (Render / Railway)
+See [DEPLOYMENT.md](DEPLOYMENT.md) for full deployment guidance.
 
-- Deploy the root project as a Node service.
-- Start command: `npm start`
-- Set environment variables from `.env.example`.
-- Ensure MongoDB URI is reachable from the deployment platform.
+Quick summary:
 
-### Frontend (Vercel)
+- Backend: Render/Railway/Fly as a Node web service
+- Frontend: Vercel (recommended) or serve built static assets from backend
+- Build root app with client build step before production deploy
 
-- Root directory: `client`
-- Build command: `npm run build`
-- Output directory: `dist`
-- Set `VITE_API_BASE_URL` to your deployed backend API URL.
+## Security Notes
 
-## Notes
+- Never commit `.env` files
+- Use strong secrets for `JWT_SECRET`
+- Restrict `CLIENT_ORIGIN` to trusted frontend domains in production
 
-- If `OPENAI_API_KEY` is not set, AI endpoints return sensible fallback suggestions.
-- Google login supports token verification when `GOOGLE_CLIENT_ID` is configured.
-# task-app
+## License
+
+ISC
